@@ -51,7 +51,7 @@ footer {
 .hero {
   min-height: 92svh;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 390px;
+  grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
   align-items: center;
   gap: 54px;
   padding: 44px 0 34px;
@@ -117,8 +117,8 @@ h3 {
 }
 
 .price-label {
-  max-width: 260px;
-  font-size: clamp(1.55rem, 3vw, 2.35rem);
+  max-width: 340px;
+  font-size: clamp(2.65rem, 4.6vw, 3.7rem);
   line-height: 1;
   font-weight: 900;
 }
@@ -172,6 +172,15 @@ h3 {
   align-items: flex-start;
   justify-content: center;
   text-align: left;
+}
+
+.brand-card {
+  min-height: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .brand-card h1 {
@@ -480,7 +489,7 @@ footer strong {
 
   .price-label {
     max-width: 340px;
-    font-size: clamp(1.65rem, 9vw, 2.25rem);
+    font-size: clamp(2.1rem, 11vw, 3rem);
   }
 
   .hero-actions {
@@ -493,6 +502,11 @@ footer strong {
   .service-card {
     min-height: 240px;
     padding: 24px;
+  }
+
+  .brand-card {
+    min-height: auto;
+    padding: 0;
   }
 
   .brand-card h1 {
