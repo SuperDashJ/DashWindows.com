@@ -6,7 +6,7 @@
     <title>Dash's Windows | Berkeley Window Cleaning</title>
     <meta
       name="description"
-      content="$75 first-floor exterior window cleaning in Berkeley from a local high-school student."
+      content="$75 first-floor exterior window cleaning in Berkeley from a local Berkeley student."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
@@ -14,7 +14,7 @@
     <main>
       <section class="hero" id="top">
         <div class="hero-copy fade-in">
-          <p class="eyebrow">Local High-School Student</p>
+          <p class="eyebrow">Local Berkeley Student</p>
           <h1>Dash's Windows</h1>
           <div class="price-lockup">
             <span class="price">$75</span>
@@ -28,7 +28,18 @@
 
         <div class="service-card fade-in" aria-label="Dash's Windows service card">
           <div class="logo-display">
-            <img src="logo.png" alt="Dash's Windows squeegee logo" class="hero-logo" />
+            <svg class="hero-logo" viewBox="0 0 260 180" role="img" aria-label="Dash's Windows squeegee logo">
+              <g class="logo-sparkles">
+                <path d="M186 16 L197 48 L229 59 L197 70 L186 102 L175 70 L143 59 L175 48 Z" />
+                <path d="M224 78 L232 99 L253 107 L232 115 L224 136 L216 115 L195 107 L216 99 Z" />
+              </g>
+              <g class="logo-squeegee" transform="rotate(25 103 106)">
+                <rect x="34" y="54" width="150" height="16" rx="8" />
+                <rect x="28" y="76" width="162" height="16" rx="8" />
+                <path d="M91 90 L115 90 L115 151 C115 164 105 174 92 174 C79 174 69 164 69 151 L69 116 C69 102 78 90 91 90 Z" />
+                <circle cx="92" cy="153" r="7" />
+              </g>
+            </svg>
           </div>
           <p class="card-price">$75</p>
           <p class="card-caption">Up to 10 first-floor exterior windows</p>
@@ -53,8 +64,20 @@
           <h2 id="booking-title">Request a time</h2>
         </div>
 
-        <div class="booking-panel fade-in">
-          <form class="request-form" id="requestForm">
+        <form
+          class="booking-panel fade-in"
+          id="requestForm"
+          action="https://formsubmit.co/sanchezjacksondashiell@gmail.com"
+          method="POST"
+        >
+          <input type="hidden" name="_subject" value="New Dash's Windows time request" />
+          <input type="hidden" name="_captcha" value="false" />
+          <input type="hidden" name="_template" value="table" />
+          <input type="hidden" name="_next" value="https://dashwindows-com.vercel.app/?request=sent" />
+          <input type="hidden" name="selected_time" id="selectedTime" />
+          <input type="hidden" name="request_summary" id="requestSummary" />
+
+          <div class="request-form">
             <label>
               Name
               <input type="text" name="name" autocomplete="name" required />
@@ -75,7 +98,7 @@
               Number of first-floor windows
               <input type="number" name="windows" inputmode="numeric" min="1" max="10" required />
             </label>
-          </form>
+          </div>
 
           <div class="calendar-card" aria-label="Available booking times">
             <div class="calendar-head">
@@ -86,9 +109,10 @@
               <span>Berkeley</span>
             </div>
             <div class="calendar-accordion" id="calendarGrid"></div>
-            <button class="button primary wide" type="button" id="submitRequest">Request selected time</button>
+            <p class="form-status" id="formStatus" aria-live="polite"></p>
+            <button class="button primary wide" type="submit" id="submitRequest">Request selected time</button>
           </div>
-        </div>
+        </form>
       </section>
     </main>
 
@@ -98,8 +122,6 @@
       <span>Text or call: (510) 559-0578</span>
     </footer>
 
-    <!-- EmailJS SDK -->
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>

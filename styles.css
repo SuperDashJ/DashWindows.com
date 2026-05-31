@@ -32,9 +32,8 @@ body {
 
 /* ── Scroll fade-in ───────────────────────────────────────────────────────── */
 .fade-in {
-  opacity: 0;
-  transform: translateY(28px);
-  transition: opacity 0.6s ease, transform 0.6s ease;
+  opacity: 1;
+  transform: none;
 }
 
 .fade-in.visible {
@@ -177,18 +176,28 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px 36px 12px;
+  padding: 10px 20px 4px;
 }
 
 .hero-logo {
-  /* Let the image be its natural size up to a max; never clip it */
   width: 100%;
-  max-width: 200px;
+  max-width: 230px;
   height: auto;
-  /* Blend the white/light background into the card so no hard box appears */
-  mix-blend-mode: multiply;
-  /* Subtle pop */
-  filter: drop-shadow(0 2px 10px rgba(19, 151, 255, 0.18));
+  display: block;
+  overflow: visible;
+  filter: drop-shadow(0 10px 18px rgba(13, 31, 60, 0.12));
+}
+
+.logo-squeegee {
+  fill: var(--navy);
+}
+
+.logo-squeegee circle {
+  fill: var(--white);
+}
+
+.logo-sparkles {
+  fill: #1d75ff;
 }
 
 .card-price {
@@ -448,6 +457,14 @@ input::placeholder {
   width: 100%;
 }
 
+.form-status {
+  min-height: 1.2em;
+  margin: 0 0 12px;
+  color: var(--blue-dark);
+  font-size: 0.92rem;
+  font-weight: 800;
+}
+
 /* ── Footer ──────────────────────────────────────────────────────────────── */
 footer {
   display: flex;
@@ -472,12 +489,12 @@ footer strong {
   .hero {
     min-height: auto;
     grid-template-columns: 1fr;
-    gap: 24px;
-    padding: 26px 0 18px;
+    gap: 18px;
+    padding: 22px 0 16px;
   }
 
   h1 {
-    font-size: clamp(3.6rem, 17vw, 5.6rem);
+    font-size: clamp(3.1rem, 15vw, 5.1rem);
   }
 
   .price-lockup {
@@ -487,24 +504,27 @@ footer strong {
   }
 
   .price {
-    font-size: clamp(6rem, 27vw, 8.8rem);
+    font-size: clamp(5.4rem, 24vw, 7.7rem);
   }
 
   .price-label {
     max-width: 340px;
+    font-size: clamp(1.65rem, 9vw, 2.25rem);
   }
 
   .hero-actions {
     align-items: flex-start;
     flex-direction: column;
+    gap: 12px;
+    margin-top: 22px;
   }
 
   .service-card {
-    padding: 20px;
+    padding: 18px;
   }
 
   .hero-logo {
-    max-width: 150px;
+    max-width: 180px;
   }
 
   .included,
@@ -533,6 +553,25 @@ footer strong {
     padding: 16px;
   }
 
+  .accordion-header {
+    padding: 14px;
+  }
+
+  .accordion-count {
+    display: none;
+  }
+
+  .accordion-panel {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    padding: 10px 12px 12px;
+  }
+
+  .slot {
+    width: 100%;
+    padding: 10px 8px;
+  }
+
   .calendar-head {
     align-items: flex-start;
     flex-direction: column;
@@ -542,5 +581,32 @@ footer strong {
   footer {
     flex-direction: column;
     padding-bottom: 28px;
+  }
+}
+
+@media (max-width: 430px) {
+  main,
+  footer {
+    width: calc(100% - 20px);
+  }
+
+  .eyebrow,
+  .section-kicker,
+  .calendar-label {
+    font-size: 0.76rem;
+  }
+
+  .button {
+    width: 100%;
+  }
+
+  .service-card,
+  .included,
+  .booking-panel {
+    border-radius: 20px;
+  }
+
+  .calendar-card {
+    margin: 0 -6px -6px;
   }
 }

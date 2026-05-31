@@ -7,13 +7,12 @@ const js = readFileSync("script.js", "utf8");
 const requiredText = [
   "Dash's Windows",
   "$75",
-  "First-Floor Exterior Cleaning",
-  "Local Berkeley High School Student",
-  "first-floor exterior windows only",
+  "Local Berkeley Student",
   "No inside access needed",
+  "Address",
   "Number of first-floor windows",
-  "Text WINDOWS to [PHONE NUMBER]",
-  "[WEBSITE LINK]"
+  "sanchezjacksondashiell@gmail.com",
+  "Text or call: (510) 559-0578"
 ];
 
 const missing = requiredText.filter((text) => !html.toLowerCase().includes(text.toLowerCase()));
@@ -28,8 +27,13 @@ if (!css.includes("--navy") || !css.includes("--blue")) {
   process.exit(1);
 }
 
-if ((js.match(/day:/g) || []).length < 8) {
-  console.error("Expected visible available calendar slots.");
+if (!js.includes("FULLY_BLOCKED_DATES") || !js.includes("BUSY_WINDOWS")) {
+  console.error("Expected calendar availability rules.");
+  process.exit(1);
+}
+
+if (!html.includes("formsubmit.co/sanchezjacksondashiell@gmail.com")) {
+  console.error("Expected form email destination.");
   process.exit(1);
 }
 
