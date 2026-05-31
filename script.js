@@ -22,7 +22,7 @@ function buildSlots() {
   today.setHours(0, 0, 0, 0);
   const slots = []; // { dateKey, label, times[] }
 
-  for (let d = 0; d < 14; d++) {
+  for (let d = 1; d <= 14; d++) {
     const date = new Date(today);
     date.setDate(today.getDate() + d);
 
