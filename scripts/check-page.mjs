@@ -42,4 +42,15 @@ if (html.includes("Local Berkeley Student") || html.includes("dashwindows-com.ve
   process.exit(1);
 }
 
+const noAccessCount = html.match(/No inside access needed/g)?.length ?? 0;
+if (noAccessCount !== 1) {
+  console.error(`Expected "No inside access needed" to appear once, found ${noAccessCount}.`);
+  process.exit(1);
+}
+
+if (html.includes("hero-logo") || html.includes("card-price")) {
+  console.error("Old logo or service-card price markup still present.");
+  process.exit(1);
+}
+
 console.log("Page content check passed.");
