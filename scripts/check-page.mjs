@@ -5,9 +5,9 @@ const css = readFileSync("styles.css", "utf8");
 const js = readFileSync("script.js", "utf8");
 
 const requiredText = [
-  "Dash's Windows",
+  "Berkeley Student Windows",
+  "By Dash",
   "$75",
-  "Local Berkeley Student",
   "No inside access needed",
   "Address",
   "Number of first-floor windows",
@@ -34,6 +34,11 @@ if (!js.includes("FULLY_BLOCKED_DATES") || !js.includes("BUSY_WINDOWS")) {
 
 if (!html.includes("formsubmit.co/sanchezjacksondashiell@gmail.com")) {
   console.error("Expected form email destination.");
+  process.exit(1);
+}
+
+if (html.includes("Local Berkeley Student") || html.includes("dashwindows-com.vercel.app")) {
+  console.error("Old brand text or URL still present.");
   process.exit(1);
 }
 
