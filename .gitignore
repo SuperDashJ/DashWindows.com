@@ -1,4 +1,2 @@
-screenshots/
-.vercel/
-node_modules/
-.vercel
+node_modules
+node_modules

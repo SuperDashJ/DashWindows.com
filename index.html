@@ -6,19 +6,19 @@
     <title>Dash's Windows | Berkeley Window Cleaning</title>
     <meta
       name="description"
-      content="$75 first-floor exterior window cleaning in Berkeley from a local Berkeley High School student."
+      content="$75 first-floor exterior window cleaning in Berkeley from a local high-school student."
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
     <main>
       <section class="hero" id="top">
-        <div class="hero-copy">
-          <p class="eyebrow">Local Berkeley High School Student</p>
+        <div class="hero-copy fade-in">
+          <p class="eyebrow">Local High-School Student</p>
           <h1>Dash's Windows</h1>
           <div class="price-lockup">
             <span class="price">$75</span>
-            <span class="price-label">First-Floor Exterior Cleaning</span>
+            <span class="price-label">Cleaning</span>
           </div>
           <p class="hero-line">First-floor exterior windows only. Simple, safe, local.</p>
           <div class="hero-actions">
@@ -27,31 +27,21 @@
           </div>
         </div>
 
-        <div class="service-card" aria-label="Dash's Windows service card">
-          <div class="card-top">
-            <span class="mini-logo" aria-hidden="true">
-              <span></span><span></span><span></span><span></span>
-            </span>
-            <strong>Dash's Windows</strong>
-          </div>
-          <div class="window-illustration" aria-hidden="true">
-            <div class="window-pane"></div>
-            <div class="squeegee"></div>
-            <div class="sparkle one"></div>
-            <div class="sparkle two"></div>
+        <div class="service-card fade-in" aria-label="Dash's Windows service card">
+          <div class="logo-display">
+            <img src="logo.png" alt="Dash's Windows squeegee logo" class="hero-logo" />
           </div>
           <p class="card-price">$75</p>
           <p class="card-caption">Up to 10 first-floor exterior windows</p>
         </div>
       </section>
 
-      <section class="included" aria-labelledby="included-title">
+      <section class="included fade-in" aria-labelledby="included-title">
         <div>
           <p class="section-kicker">What's included</p>
           <h2 id="included-title">A clear, simple outside clean.</h2>
         </div>
         <div class="included-grid">
-          <div class="included-item">First-floor exterior windows</div>
           <div class="included-item">Up to 10 windows</div>
           <div class="included-item">Outside glass cleaning</div>
           <div class="included-item">No inside access needed</div>
@@ -59,7 +49,7 @@
         </div>
       </section>
 
-      <section class="steps" aria-labelledby="steps-title">
+      <section class="steps fade-in" aria-labelledby="steps-title">
         <p class="section-kicker">How it works</p>
         <h2 id="steps-title">Pick a time, then get a quick confirmation.</h2>
         <div class="step-row">
@@ -79,14 +69,12 @@
       </section>
 
       <section class="booking" id="booking" aria-labelledby="booking-title">
-        <div class="booking-intro">
-          <p class="section-kicker">Booking</p>
+        <div class="booking-intro fade-in">
           <h2 id="booking-title">Request a time</h2>
-          <p>Fill this out first, then choose an open time below.</p>
         </div>
 
-        <div class="booking-panel">
-          <form class="request-form">
+        <div class="booking-panel fade-in">
+          <form class="request-form" id="requestForm">
             <label>
               Name
               <input type="text" name="name" autocomplete="name" required />
@@ -98,6 +86,10 @@
             <label>
               Email address
               <input type="email" name="email" autocomplete="email" required />
+            </label>
+            <label>
+              Address
+              <input type="text" name="address" autocomplete="street-address" placeholder="e.g. 123 Main St, Berkeley" required />
             </label>
             <label>
               Number of first-floor windows
@@ -113,8 +105,7 @@
               </div>
               <span>Berkeley</span>
             </div>
-            <div class="calendar-grid" id="calendarGrid"></div>
-            <p class="calendar-note">Only open windows from Dash's calendar are shown here.</p>
+            <div class="calendar-accordion" id="calendarGrid"></div>
             <button class="button primary wide" type="button" id="submitRequest">Request selected time</button>
           </div>
         </div>
@@ -128,6 +119,8 @@
       <span>[WEBSITE LINK]</span>
     </footer>
 
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script src="script.js"></script>
   </body>
 </html>
