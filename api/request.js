@@ -5,6 +5,10 @@ function clean(value) {
   return String(value ?? "").trim();
 }
 
+function getResendApiKey() {
+  return clean(process.env.RESEND_API_KEY).replace(/\uFEFF/g, "");
+}
+
 function json(response, status, body) {
   response.statusCode = status;
   response.setHeader("content-type", "application/json");
@@ -17,7 +21,9 @@ export default async function handler(request, response) {
     return json(response, 405, { ok: false, error: "Method not allowed" });
   }
 
-  if (!process.env.RESEND_API_KEY) {
+  const resendApiKey = getResendApiKey();
+
+  if (!resendApiKey) {
     return json(response, 500, { ok: false, error: "Email is not configured yet." });
   }
 
@@ -58,7 +64,7 @@ export default async function handler(request, response) {
   const resendResponse = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: {
-      authorization: `Bearer ${process.env.RESEND_API_KEY}`,
+      authorization: `Bearer ${resendApiKey}`,
       "content-type": "application/json"
     },
     body: JSON.stringify({
