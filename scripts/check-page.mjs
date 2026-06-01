@@ -15,7 +15,8 @@ const requiredText = [
   "Text or call: (510) 559-0578"
 ];
 
-const missing = requiredText.filter((text) => !html.toLowerCase().includes(text.toLowerCase()));
+const searchableText = `${html}\n${js}`;
+const missing = requiredText.filter((text) => !searchableText.toLowerCase().includes(text.toLowerCase()));
 
 if (missing.length) {
   console.error(`Missing required copy: ${missing.join(", ")}`);
@@ -48,13 +49,13 @@ for (const text of [
   }
 }
 
-if (!html.includes("mailto:sanchezjacksondashiell@gmail.com") || !js.includes("window.location.href = `mailto:sanchezjacksondashiell@gmail.com")) {
+if (!html.includes('action="/#booking"') || !js.includes("window.location.href = `mailto:sanchezjacksondashiell@gmail.com")) {
   console.error("Expected mailto request flow.");
   process.exit(1);
 }
 
-if (html.includes("formsubmit.co") || js.includes("formsubmit.co")) {
-  console.error("FormSubmit dependency still present.");
+if (html.includes("formsubmit.co") || js.includes("formsubmit.co") || html.includes("action=\"mailto:")) {
+  console.error("Insecure or broken form dependency still present.");
   process.exit(1);
 }
 
