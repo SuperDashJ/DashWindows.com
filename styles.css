@@ -49,12 +49,37 @@ footer {
 
 /* ── Hero ─────────────────────────────────────────────────────────────────── */
 .hero {
+  position: relative;
   min-height: 92svh;
   display: grid;
   grid-template-columns: minmax(0, 1.2fr) minmax(340px, 0.8fr);
   align-items: center;
   gap: 54px;
   padding: 44px 0 34px;
+  overflow: hidden;
+}
+
+.hero::before {
+  content: "";
+  position: absolute;
+  width: clamp(210px, 18vw, 300px);
+  aspect-ratio: 1.18;
+  top: 24%;
+  left: 50%;
+  z-index: 0;
+  border: 2px solid rgba(19, 151, 255, 0.2);
+  border-radius: 24px;
+  background:
+    linear-gradient(rgba(19, 151, 255, 0.18), rgba(19, 151, 255, 0.18)) 50% 0 / 2px 100% no-repeat,
+    linear-gradient(rgba(19, 151, 255, 0.18), rgba(19, 151, 255, 0.18)) 0 50% / 100% 2px no-repeat;
+  transform: translateX(-50%) rotate(-4deg);
+  pointer-events: none;
+}
+
+.hero-copy,
+.brand-card {
+  position: relative;
+  z-index: 1;
 }
 
 .eyebrow,
@@ -473,6 +498,13 @@ footer strong {
     padding: 22px 0 16px;
   }
 
+  .hero::before {
+    width: 170px;
+    top: 42%;
+    left: 86%;
+    opacity: 0.55;
+  }
+
   h1 {
     font-size: clamp(2.85rem, 13vw, 4.8rem);
   }
@@ -584,6 +616,13 @@ footer strong {
 
   .button {
     width: 100%;
+  }
+
+  .hero::before {
+    width: 140px;
+    top: 40%;
+    left: 92%;
+    opacity: 0.45;
   }
 
   .service-card,
