@@ -4,6 +4,8 @@ const html = readFileSync("index.html", "utf8");
 const css = readFileSync("styles.css", "utf8");
 const js = readFileSync("script.js", "utf8");
 const api = readFileSync("api/request.js", "utf8");
+const requestedHtml = readFileSync("requested.html", "utf8");
+const requestedJs = readFileSync("requested.js", "utf8");
 
 const requiredText = [
   "Berkeley Student Windows",
@@ -16,7 +18,7 @@ const requiredText = [
   "Text or call: (510) 559-0578"
 ];
 
-const searchableText = `${html}\n${js}\n${api}`;
+const searchableText = `${html}\n${js}\n${api}\n${requestedHtml}\n${requestedJs}`;
 const missing = requiredText.filter((text) => !searchableText.toLowerCase().includes(text.toLowerCase()));
 
 if (missing.length) {
@@ -52,6 +54,16 @@ for (const text of [
 
 if (!html.includes('action="/api/request"') || !js.includes('fetch("/api/request"')) {
   console.error("Expected server-side request flow.");
+  process.exit(1);
+}
+
+if (!js.includes('window.location.assign("/requested")') || !requestedJs.includes('window.location.replace("/#booking")')) {
+  console.error("Expected gated confirmation page after successful request.");
+  process.exit(1);
+}
+
+if (!requestedHtml.includes("Your time has been requested.") || !requestedHtml.includes("Expect a human email and text confirmation soon.")) {
+  console.error("Expected confirmation page copy.");
   process.exit(1);
 }
 

@@ -100,6 +100,7 @@ const submitButton = document.querySelector("#submitRequest");
 const selectedTimeInput = document.querySelector("#selectedTime");
 const requestSummaryInput = document.querySelector("#requestSummary");
 const formStatus = document.querySelector("#formStatus");
+const CONFIRMATION_STORAGE_KEY = "berkeleyStudentWindowsRequest";
 let selectedSlot = null;
 
 const daySlots = buildSlots();
@@ -205,10 +206,15 @@ requestForm.addEventListener("submit", async (event) => {
       throw new Error("Email request failed.");
     }
 
-    requestForm.reset();
-    selectedSlot = null;
-    document.querySelectorAll(".slot").forEach((slot) => slot.setAttribute("aria-pressed", "false"));
-    formStatus.textContent = "Request sent. Dash will follow up by text or email.";
+    sessionStorage.setItem(
+      CONFIRMATION_STORAGE_KEY,
+      JSON.stringify({
+        ...data,
+        selectedTime,
+        submittedAt: new Date().toISOString()
+      })
+    );
+    window.location.assign("/requested");
   } catch {
     formStatus.textContent = "Something went wrong. Text or call (510) 559-0578.";
   } finally {
