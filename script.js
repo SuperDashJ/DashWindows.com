@@ -103,11 +103,19 @@ const formStatus = document.querySelector("#formStatus");
 const CONFIRMATION_STORAGE_KEY = "berkeleyStudentWindowsRequest";
 let selectedSlot = null;
 
+function scrollToBooking() {
+  document.querySelector("#booking")?.scrollIntoView({ block: "start" });
+  history.replaceState(null, "", "#booking");
+}
+
 document.querySelector("[data-booking-link]")?.addEventListener("click", (event) => {
   event.preventDefault();
-  document.querySelector("#booking")?.scrollIntoView({ behavior: "smooth", block: "start" });
-  history.replaceState(null, "", "#booking");
+  scrollToBooking();
 });
+
+if (window.location.hash === "#booking") {
+  requestAnimationFrame(scrollToBooking);
+}
 
 const daySlots = buildSlots();
 

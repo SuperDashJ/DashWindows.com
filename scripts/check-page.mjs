@@ -62,12 +62,12 @@ if (!js.includes('window.location.assign("/requested")') || !requestedJs.include
   process.exit(1);
 }
 
-if (!html.includes("data-booking-link") || !js.includes("scrollIntoView({ behavior: \"smooth\", block: \"start\" })")) {
+if (!html.includes("data-booking-link") || !js.includes("function scrollToBooking()") || !js.includes('window.location.hash === "#booking"')) {
   console.error("Expected reliable booking-link scroll handler.");
   process.exit(1);
 }
 
-if (!html.includes("/script.js?v=2026-06-01-requested") || !requestedHtml.includes("/requested.js?v=2026-06-01-requested")) {
+if (!html.includes("/script.js?v=2026-06-01-booking-scroll") || !requestedHtml.includes("/requested.js?v=2026-06-01-requested")) {
   console.error("Expected cache-busted script URLs.");
   process.exit(1);
 }
