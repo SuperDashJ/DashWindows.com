@@ -104,7 +104,14 @@ const CONFIRMATION_STORAGE_KEY = "berkeleyStudentWindowsRequest";
 let selectedSlot = null;
 
 function scrollToBooking() {
-  document.querySelector("#booking")?.scrollIntoView({ block: "start" });
+  const booking = document.querySelector("#booking");
+  if (!booking) return;
+
+  window.scrollTo({
+    top: booking.getBoundingClientRect().top + window.scrollY,
+    left: 0,
+    behavior: "instant"
+  });
   history.replaceState(null, "", "#booking");
 }
 
