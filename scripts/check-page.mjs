@@ -3,6 +3,7 @@ import { readFileSync } from "node:fs";
 const html = readFileSync("index.html", "utf8");
 const css = readFileSync("styles.css", "utf8");
 const js = readFileSync("script.js", "utf8");
+const api = readFileSync("api/request.js", "utf8");
 
 const requiredText = [
   "Berkeley Student Windows",
@@ -15,7 +16,7 @@ const requiredText = [
   "Text or call: (510) 559-0578"
 ];
 
-const searchableText = `${html}\n${js}`;
+const searchableText = `${html}\n${js}\n${api}`;
 const missing = requiredText.filter((text) => !searchableText.toLowerCase().includes(text.toLowerCase()));
 
 if (missing.length) {
@@ -49,12 +50,17 @@ for (const text of [
   }
 }
 
-if (!html.includes('action="/#booking"') || !js.includes("window.location.href = `mailto:sanchezjacksondashiell@gmail.com")) {
-  console.error("Expected mailto request flow.");
+if (!html.includes('action="/api/request"') || !js.includes('fetch("/api/request"')) {
+  console.error("Expected server-side request flow.");
   process.exit(1);
 }
 
-if (html.includes("formsubmit.co") || js.includes("formsubmit.co") || html.includes("action=\"mailto:")) {
+if (!api.includes("RESEND_API_KEY") || !api.includes("sanchezjacksondashiell@gmail.com")) {
+  console.error("Expected Resend email endpoint.");
+  process.exit(1);
+}
+
+if (html.includes("formsubmit.co") || js.includes("formsubmit.co") || html.includes("action=\"mailto:") || js.includes("mailto:")) {
   console.error("Insecure or broken form dependency still present.");
   process.exit(1);
 }

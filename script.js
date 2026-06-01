@@ -163,7 +163,7 @@ if (daySlots.length === 0) {
 }
 
 // ─── Submit handler ─────────────────────────────────────────────────────────
-requestForm.addEventListener("submit", (event) => {
+requestForm.addEventListener("submit", async (event) => {
   event.preventDefault();
 
   if (!requestForm.reportValidity()) {
@@ -190,16 +190,31 @@ requestForm.addEventListener("submit", (event) => {
 
   requestSummaryInput.value = requestSummary;
 
-  const subject = "New Berkeley Student Windows time request";
-  const body = [
-    "New Berkeley Student Windows request:",
-    "",
-    requestSummary
-  ].join("\n");
+  submitButton.disabled = true;
+  submitButton.textContent = "Sending request...";
+  formStatus.textContent = "";
 
-  submitButton.textContent = "Opening email...";
-  formStatus.textContent = "Your email app should open with the request filled in. Tap send to finish.";
-  window.location.href = `mailto:sanchezjacksondashiell@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+  try {
+    const response = await fetch("/api/request", {
+      method: "POST",
+      headers: { "content-type": "application/json" },
+      body: JSON.stringify({ ...data, selectedTime })
+    });
+
+    if (!response.ok) {
+      throw new Error("Email request failed.");
+    }
+
+    requestForm.reset();
+    selectedSlot = null;
+    document.querySelectorAll(".slot").forEach((slot) => slot.setAttribute("aria-pressed", "false"));
+    formStatus.textContent = "Request sent. Dash will follow up by text or email.";
+  } catch {
+    formStatus.textContent = "Something went wrong. Text or call (510) 559-0578.";
+  } finally {
+    submitButton.disabled = false;
+    submitButton.textContent = "Request selected time";
+  }
 });
 
 // ─── Scroll-fade-in (IntersectionObserver) ──────────────────────────────────
