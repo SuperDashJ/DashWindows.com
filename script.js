@@ -1,31 +1,28 @@
-// ─── Availability rules from Dash's current calendar snapshot ────────────────
+// ─── Rolling availability rules ──────────────────────────────────────────────
 // Days of week: 0=Sun, 1=Mon, 2=Tue, 3=Wed, 4=Thu, 5=Fri, 6=Sat
-const WEEKDAY_START = { 2: "15:30", 3: "15:30", 5: "15:30" };
-const WEEKEND_START = { 0: "09:00", 6: "09:00" };
-const WEEKDAY_END = "18:30";
-const WEEKEND_END = "18:30";
+const AVAILABILITY_BY_DAY = {
+  0: { start: "09:00", end: "18:30" },
+  2: { start: "15:30", end: "18:30" },
+  3: { start: "15:30", end: "18:30" },
+  5: { start: "15:30", end: "18:30" },
+  6: { start: "09:00", end: "18:30" }
+};
 const SLOT_MINUTES = 60;
 const SLOT_STEP_MINUTES = 15;
+const BOOKING_DAYS_AHEAD = 21;
 
-const FULLY_BLOCKED_DATES = ["2026-06-06", "2026-06-10"];
-
-const BUSY_WINDOWS = [
-  { date: "2026-06-01", start: "17:00", end: "20:30" },
-  { date: "2026-06-04", start: "18:30", end: "19:30" },
-  { date: "2026-06-05", start: "16:00", end: "17:00" },
-  { date: "2026-06-07", start: "15:00", end: "17:30" },
-  { date: "2026-06-08", start: "17:00", end: "21:30" },
-  { date: "2026-06-11", start: "18:30", end: "19:30" },
-  { date: "2026-06-12", start: "16:00", end: "21:30" },
-  { date: "2026-06-13", start: "08:00", end: "09:00" }
-];
+const FULLY_BLOCKED_DATES = ["2026-06-06"];
+const BUSY_WINDOWS = [];
 
 function buildSlots() {
-  const today = new Date();
+  const now = new Date();
+  const today = new Date(now);
   today.setHours(0, 0, 0, 0);
+  const todayKey = toISODate(today);
+  const currentMinute = now.getHours() * 60 + now.getMinutes();
   const slots = [];
 
-  for (let d = 1; d <= 14; d++) {
+  for (let d = 0; d < BOOKING_DAYS_AHEAD; d++) {
     const date = new Date(today);
     date.setDate(today.getDate() + d);
 
@@ -34,15 +31,16 @@ function buildSlots() {
 
     if (FULLY_BLOCKED_DATES.includes(dateKey)) continue;
 
-    const startMap = { ...WEEKDAY_START, ...WEEKEND_START };
-    if (!(dow in startMap)) continue;
+    const availability = AVAILABILITY_BY_DAY[dow];
+    if (!availability) continue;
 
-    const startMin = timeStrToMin(startMap[dow]);
-    const endMin = timeStrToMin(dow in WEEKDAY_START ? WEEKDAY_END : WEEKEND_END);
+    const startMin = timeStrToMin(availability.start);
+    const endMin = timeStrToMin(availability.end);
     const times = [];
 
     for (let m = startMin; m + SLOT_MINUTES <= endMin; m += SLOT_STEP_MINUTES) {
       const slotEnd = m + SLOT_MINUTES;
+      if (dateKey === todayKey && m <= currentMinute) continue;
       if (!isBusy(dateKey, m, slotEnd)) {
         times.push(minToTimeStr(m));
       }
@@ -68,7 +66,10 @@ function isBusy(dateKey, startMin, endMin) {
 }
 
 function toISODate(date) {
-  return date.toISOString().slice(0, 10);
+  const year = date.getFullYear();
+  const month = String(date.getMonth() + 1).padStart(2, "0");
+  const day = String(date.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
 }
 
 function timeStrToMin(str) {
@@ -108,7 +109,7 @@ if (new URLSearchParams(window.location.search).get("request") === "sent") {
 }
 
 if (daySlots.length === 0) {
-  calendarGrid.innerHTML = '<p class="no-slots">No available times in the next 2 weeks. Check back soon!</p>';
+  calendarGrid.innerHTML = '<p class="no-slots">No available times in the next 3 weeks. Check back soon!</p>';
 } else {
   daySlots.forEach((day, index) => {
     const item = document.createElement("div");

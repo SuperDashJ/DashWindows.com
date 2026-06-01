@@ -32,6 +32,22 @@ if (!js.includes("FULLY_BLOCKED_DATES") || !js.includes("BUSY_WINDOWS")) {
   process.exit(1);
 }
 
+for (const text of [
+  "AVAILABILITY_BY_DAY",
+  "BOOKING_DAYS_AHEAD = 21",
+  "2026-06-06",
+  '2: { start: "15:30", end: "18:30" }',
+  '3: { start: "15:30", end: "18:30" }',
+  '5: { start: "15:30", end: "18:30" }',
+  '6: { start: "09:00", end: "18:30" }',
+  '0: { start: "09:00", end: "18:30" }'
+]) {
+  if (!js.includes(text)) {
+    console.error(`Expected calendar cadence rule missing: ${text}`);
+    process.exit(1);
+  }
+}
+
 if (!html.includes("formsubmit.co/sanchezjacksondashiell@gmail.com")) {
   console.error("Expected form email destination.");
   process.exit(1);
