@@ -48,8 +48,13 @@ for (const text of [
   }
 }
 
-if (!html.includes("formsubmit.co/sanchezjacksondashiell@gmail.com")) {
-  console.error("Expected form email destination.");
+if (!html.includes("mailto:sanchezjacksondashiell@gmail.com") || !js.includes("window.location.href = `mailto:sanchezjacksondashiell@gmail.com")) {
+  console.error("Expected mailto request flow.");
+  process.exit(1);
+}
+
+if (html.includes("formsubmit.co") || js.includes("formsubmit.co")) {
+  console.error("FormSubmit dependency still present.");
   process.exit(1);
 }
 

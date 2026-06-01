@@ -164,13 +164,13 @@ if (daySlots.length === 0) {
 
 // ─── Submit handler ─────────────────────────────────────────────────────────
 requestForm.addEventListener("submit", (event) => {
+  event.preventDefault();
+
   if (!requestForm.reportValidity()) {
-    event.preventDefault();
     return;
   }
 
   if (!selectedSlot) {
-    event.preventDefault();
     formStatus.textContent = "Please choose a day and time first.";
     return;
   }
@@ -179,7 +179,7 @@ requestForm.addEventListener("submit", (event) => {
   const selectedTime = `${selectedSlot.label} at ${selectedSlot.time}`;
 
   selectedTimeInput.value = selectedTime;
-  requestSummaryInput.value = [
+  const requestSummary = [
     `Name: ${data.name}`,
     `Phone: ${data.phone}`,
     `Email: ${data.email}`,
@@ -188,7 +188,18 @@ requestForm.addEventListener("submit", (event) => {
     `Requested time: ${selectedTime}`
   ].join("\n");
 
-  submitButton.textContent = "Sending request...";
+  requestSummaryInput.value = requestSummary;
+
+  const subject = "New Berkeley Student Windows time request";
+  const body = [
+    "New Berkeley Student Windows request:",
+    "",
+    requestSummary
+  ].join("\n");
+
+  submitButton.textContent = "Opening email...";
+  formStatus.textContent = "Your email app should open with the request filled in. Tap send to finish.";
+  window.location.href = `mailto:sanchezjacksondashiell@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
 });
 
 // ─── Scroll-fade-in (IntersectionObserver) ──────────────────────────────────
